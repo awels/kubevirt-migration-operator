@@ -17,12 +17,14 @@ limitations under the License.
 package e2e
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"time"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -205,6 +207,7 @@ var _ = Describe("Manager", Ordered, func() {
 					"-n", *migrationOperatorNamespace)
 				output, err := utils.Run(cmd)
 				g.Expect(err).NotTo(HaveOccurred())
+				output = strings.TrimPrefix(output, "selecting podman as container runtime\n")
 				g.Expect(output).To(Equal("Succeeded"), "curl pod in wrong status")
 			}
 			Eventually(verifyCurlUp, 5*time.Minute).Should(Succeed())
@@ -246,6 +249,10 @@ func serviceAccountToken() (string, error) {
 
 		output, err := cmd.CombinedOutput()
 		g.Expect(err).NotTo(HaveOccurred())
+		output, found := bytes.CutPrefix(output, []byte("selecting podman as container runtime\n"))
+		if found {
+			By("removing unneeded text from the output")
+		}
 
 		// Parse the JSON output to extract the token
 		var token tokenRequest

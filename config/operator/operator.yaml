@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: operator
-  namespace: system
+  namespace: kubevirt
   labels:
     control-plane: operator
     app.kubernetes.io/name: kubevirt-migration-operator
@@ -36,7 +36,7 @@ spec:
         - name: OPERATOR_VERSION
           value: "0.0.1"
         - name: CONTROLLER_IMAGE
-          value: "registry:5000/kubevirt-migration-controller"
+          value: "quay.io/kubevirt/kubevirt-migration-controller:latest"
         - name: DEPLOY_CLUSTER_RESOURCES
           value: "true"
         - name: VERBOSITY 

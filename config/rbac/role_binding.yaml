@@ -12,7 +12,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: operator
-  namespace: system
+  namespace: kubevirt
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -28,4 +28,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: operator
-  namespace: system
+  namespace: kubevirt

@@ -120,7 +120,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: manager-role
-  namespace: kubevirt-migration-system
+  namespace: kubevirt
 rules:
 - apiGroups:
   - ""
